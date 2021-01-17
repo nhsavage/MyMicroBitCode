@@ -1,13 +1,13 @@
 let tonelist: number[];
-let index: number;
 function check_tones(tonelist: number[]): number {
     for (let num of tonelist) {
         //  wait for button pressed
         while (true) {
             if (input.buttonIsPressed(Button.A)) {
+                basic.showArrow(ArrowNames.West)
                 music.playTone(Note.C, tonetime)
                 if (num != 0) {
-                    basic.showIcon(IconNames.Angry)
+                    basic.showIcon(IconNames.No)
                     return 1
                 } else {
                     break
@@ -16,9 +16,10 @@ function check_tones(tonelist: number[]): number {
             }
             
             if (input.buttonIsPressed(Button.B)) {
+                basic.showArrow(ArrowNames.East)
                 music.playTone(Note.G, tonetime)
                 if (num != 2) {
-                    basic.showIcon(IconNames.Angry)
+                    basic.showIcon(IconNames.No)
                     return 1
                 } else {
                     break
@@ -27,9 +28,10 @@ function check_tones(tonelist: number[]): number {
             }
             
             if (input.logoIsPressed()) {
+                basic.showArrow(ArrowNames.North)
                 music.playTone(Note.E, tonetime)
                 if (num != 1) {
-                    basic.showIcon(IconNames.Angry)
+                    basic.showIcon(IconNames.No)
                     return 1
                 } else {
                     break
@@ -40,21 +42,27 @@ function check_tones(tonelist: number[]): number {
         }
     }
     //  if we get here, we got them all correct
-    basic.showIcon(IconNames.Happy)
+    basic.showIcon(IconNames.Yes)
     return 0
 }
 
+function set_tonelist(numtones: number): number[] {
+    //  set up the list of tones for this round
+    let tonelist2 = [0, 0, 0]
+    for (let i = 0; i < numtones; i++) {
+        tonelist2[i] = randint(0, 2)
+    }
+    return tonelist2
+}
+
+//  main code starts here 
 music.setBuiltInSpeakerEnabled(true)
 //  When we start have 3 tones and 500 ms gaps
-let count = 3
+let numtones = 3
 let tonetime = 500
+//  game loop
 while (true) {
-    tonelist = [0, 0, 0]
-    index = 0
-    while (index <= count - 1) {
-        tonelist[index] = randint(0, 2)
-        index += 1
-    }
+    tonelist = set_tonelist(numtones)
     //  play the tones
     for (let num2 of tonelist) {
         if (num2 == 0) {
