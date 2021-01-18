@@ -45,9 +45,9 @@ score = 0
 numtones = 3
 # game loop
 while True:
-    tonelist = set_tonelist(numtones)
     # get faster each time
     for tonetime in [500, 300, 100]:
+        tonelist = set_tonelist(numtones)
         # play the tones
         for num2 in tonelist:
             if num2 == 0:

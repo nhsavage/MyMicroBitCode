@@ -65,9 +65,9 @@ let score = 0
 let numtones = 3
 //  game loop
 while (true) {
-    tonelist = set_tonelist(numtones)
     //  get faster each time
     for (let tonetime of [500, 300, 100]) {
+        tonelist = set_tonelist(numtones)
         //  play the tones
         for (let num2 of tonelist) {
             if (num2 == 0) {
