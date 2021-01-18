@@ -1,4 +1,6 @@
 def check_tones(tonelist):
+    # possible improvement - save values in a list
+    # and then check whole list
     for num in tonelist:
         # wait for button pressed
         while True:
@@ -29,6 +31,7 @@ def check_tones(tonelist):
     # if we get here, we got them all correct
     basic.show_icon(IconNames.YES)
     return 0
+
 def set_tonelist(numtones: number):
     # set up the list of tones for this round
     tonelist2 = [0, 0 , 0]
@@ -37,6 +40,7 @@ def set_tonelist(numtones: number):
     return tonelist2
 # main code starts here 
 music.set_built_in_speaker_enabled(True)
+score = 0
 # When we start have 3 tones and 500 ms gaps
 numtones = 3
 tonetime = 500
@@ -57,9 +61,14 @@ while True:
             basic.show_arrow(ArrowNames.EAST)
             music.play_tone(392, tonetime)
             basic.clear_screen()
-    check_tones(tonelist)
+    l_fail = check_tones(tonelist)
+    if l_fail:
+        basic.show_icon(IconNames.SAD)
+        score = 0
+    else: 
+        score +=1
     pause(500)
-    basic.show_icon(IconNames.SQUARE)
+    basic.show_string(str(score))
     # If we want to go again press button A
     while True:
         if input.button_is_pressed(Button.A):

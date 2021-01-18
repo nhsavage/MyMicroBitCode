@@ -1,5 +1,8 @@
 let tonelist: number[];
+let l_fail: number;
 function check_tones(tonelist: number[]): number {
+    //  possible improvement - save values in a list
+    //  and then check whole list
     for (let num of tonelist) {
         //  wait for button pressed
         while (true) {
@@ -57,6 +60,7 @@ function set_tonelist(numtones: number): number[] {
 
 //  main code starts here 
 music.setBuiltInSpeakerEnabled(true)
+let score = 0
 //  When we start have 3 tones and 500 ms gaps
 let numtones = 3
 let tonetime = 500
@@ -84,9 +88,16 @@ while (true) {
         }
         
     }
-    check_tones(tonelist)
+    l_fail = check_tones(tonelist)
+    if (l_fail) {
+        basic.showIcon(IconNames.Sad)
+        score = 0
+    } else {
+        score += 1
+    }
+    
     pause(500)
-    basic.showIcon(IconNames.Square)
+    basic.showString("" + score)
     //  If we want to go again press button A
     while (true) {
         if (input.buttonIsPressed(Button.A)) {
