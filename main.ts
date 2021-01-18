@@ -8,7 +8,7 @@ function check_tones(tonelist: number[]): number {
         while (true) {
             if (input.buttonIsPressed(Button.A)) {
                 basic.showArrow(ArrowNames.West)
-                music.playTone(Note.C, tonetime)
+                music.playTone(Note.C, 250)
                 if (num != 0) {
                     basic.showIcon(IconNames.No)
                     return 1
@@ -20,7 +20,7 @@ function check_tones(tonelist: number[]): number {
             
             if (input.buttonIsPressed(Button.B)) {
                 basic.showArrow(ArrowNames.East)
-                music.playTone(Note.G, tonetime)
+                music.playTone(Note.G, 250)
                 if (num != 2) {
                     basic.showIcon(IconNames.No)
                     return 1
@@ -32,7 +32,7 @@ function check_tones(tonelist: number[]): number {
             
             if (input.logoIsPressed()) {
                 basic.showArrow(ArrowNames.North)
-                music.playTone(Note.E, tonetime)
+                music.playTone(Note.E, 250)
                 if (num != 1) {
                     basic.showIcon(IconNames.No)
                     return 1
@@ -61,48 +61,51 @@ function set_tonelist(numtones: number): number[] {
 //  main code starts here 
 music.setBuiltInSpeakerEnabled(true)
 let score = 0
-//  When we start have 3 tones and 500 ms gaps
+//  When we start have 3 tones 
 let numtones = 3
-let tonetime = 500
 //  game loop
 while (true) {
     tonelist = set_tonelist(numtones)
-    //  play the tones
-    for (let num2 of tonelist) {
-        if (num2 == 0) {
-            basic.showArrow(ArrowNames.West)
-            music.playTone(262, tonetime)
-            basic.clearScreen()
+    //  get faster each time
+    for (let tonetime of [500, 300, 100]) {
+        //  play the tones
+        for (let num2 of tonelist) {
+            if (num2 == 0) {
+                basic.showArrow(ArrowNames.West)
+                music.playTone(262, tonetime)
+                basic.clearScreen()
+            }
+            
+            if (num2 == 1) {
+                basic.showArrow(ArrowNames.North)
+                music.playTone(330, tonetime)
+                basic.clearScreen()
+            }
+            
+            if (num2 == 2) {
+                basic.showArrow(ArrowNames.East)
+                music.playTone(392, tonetime)
+                basic.clearScreen()
+            }
+            
+        }
+        l_fail = check_tones(tonelist)
+        if (l_fail) {
+            basic.showIcon(IconNames.Sad)
+            pause(500)
+            score = 0
+        } else {
+            score += 1
         }
         
-        if (num2 == 1) {
-            basic.showArrow(ArrowNames.North)
-            music.playTone(330, tonetime)
-            basic.clearScreen()
+        pause(500)
+        basic.showString("" + score)
+        //  If we want to go again press button A
+        while (true) {
+            if (input.buttonIsPressed(Button.A)) {
+                break
+            }
+            
         }
-        
-        if (num2 == 2) {
-            basic.showArrow(ArrowNames.East)
-            music.playTone(392, tonetime)
-            basic.clearScreen()
-        }
-        
-    }
-    l_fail = check_tones(tonelist)
-    if (l_fail) {
-        basic.showIcon(IconNames.Sad)
-        score = 0
-    } else {
-        score += 1
-    }
-    
-    pause(500)
-    basic.showString("" + score)
-    //  If we want to go again press button A
-    while (true) {
-        if (input.buttonIsPressed(Button.A)) {
-            break
-        }
-        
     }
 }
