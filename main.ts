@@ -101,6 +101,7 @@ while (true) {
             basic.showIcon(IconNames.Sad)
             pause(500)
             score = 0
+            break
         } else {
             score += 1
         }

@@ -50,10 +50,11 @@ def check_tones(tonelist):
 
 def set_tonelist(numtones: number):
     # set up the list of tones for this round
-    tonelist2 = [0, 0 , 0]
+    tonelist2 = [0, 0, 0]
     for i in range(numtones):
         tonelist2[i] = randint(0, 2)
     return tonelist2
+
 # main code starts here 
 music.set_built_in_speaker_enabled(True)
 score = 0
@@ -72,6 +73,7 @@ while True:
             basic.show_icon(IconNames.SAD)
             pause(500)
             score = 0
+            break
         else: 
             score +=1
         pause(500)
