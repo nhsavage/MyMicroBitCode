@@ -1,7 +1,32 @@
 let tonelist: number[];
 let l_fail: number;
+function play_tones(tonelist: number[], tonetime: number) {
+    //  play the random list of tones 
+    //  previously generated 
+    for (let num2 of tonelist) {
+        if (num2 == 0) {
+            basic.showArrow(ArrowNames.West)
+            music.playTone(262, tonetime)
+            basic.clearScreen()
+        }
+        
+        if (num2 == 1) {
+            basic.showArrow(ArrowNames.North)
+            music.playTone(330, tonetime)
+            basic.clearScreen()
+        }
+        
+        if (num2 == 2) {
+            basic.showArrow(ArrowNames.East)
+            music.playTone(392, tonetime)
+            basic.clearScreen()
+        }
+        
+    }
+}
+
 function check_tones(tonelist: number[]): number {
-    //  possible improvement - save values in a list
+    //  possible improvement - save guesses in a list
     //  and then check whole list
     for (let num of tonelist) {
         //  wait for button pressed
@@ -69,26 +94,8 @@ while (true) {
     for (let tonetime of [500, 300, 100]) {
         tonelist = set_tonelist(numtones)
         //  play the tones
-        for (let num2 of tonelist) {
-            if (num2 == 0) {
-                basic.showArrow(ArrowNames.West)
-                music.playTone(262, tonetime)
-                basic.clearScreen()
-            }
-            
-            if (num2 == 1) {
-                basic.showArrow(ArrowNames.North)
-                music.playTone(330, tonetime)
-                basic.clearScreen()
-            }
-            
-            if (num2 == 2) {
-                basic.showArrow(ArrowNames.East)
-                music.playTone(392, tonetime)
-                basic.clearScreen()
-            }
-            
-        }
+        play_tones(tonelist, tonetime)
+        //  check the guesses
         l_fail = check_tones(tonelist)
         if (l_fail) {
             basic.showIcon(IconNames.Sad)
@@ -100,12 +107,6 @@ while (true) {
         
         pause(500)
         basic.showString("" + score)
-        //  If we want to go again press button A
-        while (true) {
-            if (input.buttonIsPressed(Button.A)) {
-                break
-            }
-            
-        }
+        pause(500)
     }
 }

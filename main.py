@@ -1,5 +1,21 @@
+def play_tones(tonelist, tonetime):
+    # play the random list of tones 
+    # previously generated 
+    for num2 in tonelist:
+        if num2 == 0:
+            basic.show_arrow(ArrowNames.WEST)
+            music.play_tone(262, tonetime)
+            basic.clear_screen()
+        if num2 == 1:
+            basic.show_arrow(ArrowNames.NORTH)
+            music.play_tone(330, tonetime)
+            basic.clear_screen()
+        if num2 == 2:
+            basic.show_arrow(ArrowNames.EAST)
+            music.play_tone(392, tonetime)
+            basic.clear_screen()
 def check_tones(tonelist):
-    # possible improvement - save values in a list
+    # possible improvement - save guesses in a list
     # and then check whole list
     for num in tonelist:
         # wait for button pressed
@@ -49,19 +65,8 @@ while True:
     for tonetime in [500, 300, 100]:
         tonelist = set_tonelist(numtones)
         # play the tones
-        for num2 in tonelist:
-            if num2 == 0:
-                basic.show_arrow(ArrowNames.WEST)
-                music.play_tone(262, tonetime)
-                basic.clear_screen()
-            if num2 == 1:
-                basic.show_arrow(ArrowNames.NORTH)
-                music.play_tone(330, tonetime)
-                basic.clear_screen()
-            if num2 == 2:
-                basic.show_arrow(ArrowNames.EAST)
-                music.play_tone(392, tonetime)
-                basic.clear_screen()
+        play_tones(tonelist, tonetime)
+        # check the guesses
         l_fail = check_tones(tonelist)
         if l_fail:
             basic.show_icon(IconNames.SAD)
@@ -71,7 +76,4 @@ while True:
             score +=1
         pause(500)
         basic.show_string(str(score))
-        # If we want to go again press button A
-        while True:
-            if input.button_is_pressed(Button.A):
-                break
+        pause(500)
